@@ -3,16 +3,16 @@ import { defineStore } from "pinia";
 export const addProduct = defineStore("addProduct", {
     state: () => ({ name: "", price: "", discount: "", description: '', stock: "" }),
     actions: {
-        setName(txt: string) {
+        SET_NAME(txt: string) {
             this.name = txt
         },
-        setPrice(txt:string){
+        SET_PRICE(txt:string){
             this.price = txt
         },
-        setDiscount(txt: string) {
+        SET_DISCOUNT(txt: string) {
             this.discount = txt
         },
-        setStock(txt: string) {
+        SET_STOCK(txt: string) {
             this.stock = txt
         }
     }

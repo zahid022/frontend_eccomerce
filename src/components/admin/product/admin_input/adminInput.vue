@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { addProduct } from '@/stores/admin/add_product/addProduct';
+import { addProduct } from '@/stores/admin/product/add_product/addProduct';
 
 const props = defineProps<{
     name : string,
@@ -11,14 +11,14 @@ const props = defineProps<{
 
 const store = addProduct()
 
-const {setName,  setDiscount, setPrice, setStock} = store
+const {SET_NAME,  SET_DISCOUNT, SET_PRICE, SET_STOCK} = store
 
 const handleChange = (event: Event) => {
     let selectedValue : string | number = (event.target as HTMLInputElement).value;
-    if(props.state === "name") setName(selectedValue)
-    if(props.state === "price") setPrice(selectedValue)
-    if(props.state === "discount") setDiscount(selectedValue)
-    if(props.state === "stock") setStock(selectedValue)
+    if(props.state === "name") SET_NAME(selectedValue)
+    if(props.state === "price") SET_PRICE(selectedValue)
+    if(props.state === "discount") SET_DISCOUNT(selectedValue)
+    if(props.state === "stock") SET_STOCK(selectedValue)
 };
 </script>
 

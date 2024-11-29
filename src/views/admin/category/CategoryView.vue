@@ -1,6 +1,6 @@
 <template>
     <div>
-        Show Category
+        
     </div>
 </template>
 

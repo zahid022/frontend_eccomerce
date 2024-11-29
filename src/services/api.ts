@@ -1,3 +1,5 @@
+import type { category } from "@/types/dbType";
+
 let token = localStorage.getItem("token")
 token = token ? JSON.parse(token) : ''
 
@@ -11,79 +13,112 @@ class api {
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({email, password})
+            body: JSON.stringify({ email, password })
         }).then((res) => res.json())
-        .then((data) => data)
-        .catch((err) => {
-            console.error("error", err);
-        })
+            .then((data) => data)
+            .catch((err) => {
+                console.error("error", err);
+            })
     }
 
     async getProducts() {
         return fetch(`${this.url}/products`)
-        .then((res) => res.json())
-        .then(data => data)
-        .catch((err) => {
-            console.error("error", err);
-        })
+            .then((res) => res.json())
+            .then(data => data)
+            .catch((err) => {
+                console.error("error", err);
+            })
     }
 
-    async getBrand(){
+    async getBrand() {
         return fetch(`${this.url}/brand`)
-        .then((res) => res.json())
-        .then(data => data)
-        .catch((err) => {
-            console.error("error", err);
-        })
+            .then((res) => res.json())
+            .then(data => data)
+            .catch((err) => {
+                console.error("error", err);
+            })
     }
 
-    async getCategory(){
+    async getCategory() {
         return fetch(`${this.url}/category`)
-        .then((res) => res.json())
-        .then(data => data)
-        .catch((err) => {
-            console.error("error", err);
-        })
+            .then((res) => res.json())
+            .then(data => data)
+            .catch((err) => {
+                console.error("error", err);
+            })
     }
 
-    async getSubCategory(id : string){
+    async getSubCategory(id: string) {
         return fetch(`${this.url}/category/subcategory/cat/${id}`)
-        .then((res) => res.json())
-        .then(data => data)
-        .catch((err) => {
-            console.error("error", err);
-        })
+            .then((res) => res.json())
+            .then(data => data)
+            .catch((err) => {
+                console.error("error", err);
+            })
     }
 
-    async uploadImage(data : any){
+    async uploadImage(data: any) {
         return fetch(`${this.url}/img/upload`, {
-            method : "POST",
-            headers : {
-                "Authorization" : `Bearer ${token}`
+            method: "POST",
+            headers: {
+                "Authorization": `Bearer ${token}`
             },
-            body : data
+            body: data
         })
-        .then((res) => res.json())
-        .then(data => data)
-        .catch((err) => {
-            console.error("error", err);
-        })
+            .then((res) => res.json())
+            .then(data => data)
+            .catch((err) => {
+                console.error("error", err);
+            })
     }
 
-    async addProduct(data : any){
+    async addProduct(data: any) {
         return fetch(`${this.url}/products`, {
-            method : "POST",
-            headers : {
-                "Content-Type" : "application/json",
-                "Authorization" : `Bearer ${token}`
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
             },
-            body : JSON.stringify(data)
+            body: JSON.stringify(data)
         })
-        .then((res) => res.json())
-        .then(data => data)
-        .catch((err) => {
-            console.error("error", err);
+            .then((res) => res.json())
+            .then(data => data)
+            .catch((err) => {
+                console.error("error", err);
+            })
+    }
+
+    async addCategory(data: category) {
+        return fetch(`${this.url}/category`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
+            body: JSON.stringify(data)
         })
+            .then((res) => {
+                if (!res.ok) return false
+                return res.json()
+            })
+            .then(data => data)
+            .catch((err) => {
+                console.error("error", err);
+            })
+    }
+
+    async deleteProduct(id: any) {
+        return fetch(`${this.url}/products/${id}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
+        })
+            .then((res) => res.ok)
+            .catch((err) => {
+                console.error("error", err);
+            })
     }
 
 }

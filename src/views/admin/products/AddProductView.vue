@@ -6,7 +6,7 @@ import { CloudIcon } from '@heroicons/vue/24/outline';
 import { ref, watch } from 'vue';
 import AdminInput from '../../../components/admin/product/admin_input/adminInput.vue';
 import AdminSelect from '../../../components/admin/product/admin_select/adminSelect.vue';
-import { addProduct } from '@/stores/admin/add_product/addProduct';
+import { addProduct } from '@/stores/admin/product/add_product/addProduct';
 import { storeToRefs } from 'pinia';
 import { MinusIcon } from '@heroicons/vue/24/outline';
 
@@ -92,8 +92,13 @@ const handleImageUpload = async (event: Event) => {
     const input = event.target as HTMLInputElement;
     if (input.files) {
         formData.append("image", input.files[0])
-        let result = await api.uploadImage(formData)
-        images.value.push(result.url)
+        try {
+            let result = await api.uploadImage(formData)
+            
+            images.value.push(result.url)
+        } catch{
+            return
+        }
     }
 };
 
@@ -119,8 +124,7 @@ const handleAddProduct = async () => {
         size : selectedSizes.value, 
         color : selectedColors.value
     }
-    let result = await api.addProduct(obj) 
-    console.log(result)
+    await api.addProduct(obj)
 }
 
 // ------------

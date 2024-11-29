@@ -3,11 +3,14 @@ export interface product {
     description : string;
     price : number;
     category_id : number;
+    category_name : string;
     name : string;
     discount : number;
     sub_category_id : number;
+    sub_category_name : string;
     img : string[];
     brand_id : number;
+    brand_name : string;
     stock : number;
     size : string[];
     color : string[];
