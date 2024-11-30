@@ -4,8 +4,10 @@ import { ref } from 'vue';
 import { Form, Field, ErrorMessage, useForm  } from 'vee-validate';
 import * as yup from 'yup';
 import api from '@/services/api';
+import { useToast } from 'vue-toastification';
 
 const showPassword = ref<boolean>(false)
+const toast = useToast()
 
 const schema = yup.object({
   email: yup.string().required('Email is required').email('Invalid email format'),
@@ -19,6 +21,11 @@ const toggleShow = () => {
 const handleSubmit = async (values: any) => {
     const { email, password } = values
     let result = await api.login(email, password)
+
+    if(!result) {
+        toast.error("Username or password is valid")
+        return
+    } 
 
     localStorage.setItem("token", JSON.stringify(result.token))
     location.reload()

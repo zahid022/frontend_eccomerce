@@ -9,7 +9,9 @@ import AdminSelect from '../../../components/admin/product/admin_select/adminSel
 import { addProduct } from '@/stores/admin/product/add_product/addProduct';
 import { storeToRefs } from 'pinia';
 import { MinusIcon } from '@heroicons/vue/24/outline';
+import { useToast } from 'vue-toastification';
 
+const toast = useToast()
 
 // choose size and color 
 const size = Size
@@ -124,7 +126,14 @@ const handleAddProduct = async () => {
         size : selectedSizes.value, 
         color : selectedColors.value
     }
-    await api.addProduct(obj)
+    let response = await api.addProduct(obj)
+    console.log(response)
+
+    if(!response) {
+        toast.error("Product created is failed")
+        return
+    }
+    toast.success(`${response.message}`)
 }
 
 // ------------

@@ -14,7 +14,11 @@ class api {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({ email, password })
-        }).then((res) => res.json())
+        }).then((res) => {
+            if(!res.ok) return false
+
+            return res.json()
+        })
             .then((data) => data)
             .catch((err) => {
                 console.error("error", err);
@@ -81,7 +85,11 @@ class api {
             },
             body: JSON.stringify(data)
         })
-            .then((res) => res.json())
+            .then((res) => {
+                if(!res.ok) return false
+
+                return res.json()
+            })
             .then(data => data)
             .catch((err) => {
                 console.error("error", err);
@@ -107,6 +115,25 @@ class api {
             })
     }
 
+    async addBrand(data: category) {
+        return fetch(`${this.url}/brand`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
+            body: JSON.stringify(data)
+        })
+            .then((res) => {
+                if (!res.ok) return false
+                return res.json()
+            })
+            .then(data => data)
+            .catch((err) => {
+                console.error("error", err);
+            })
+    }
+
     async deleteProduct(id: any) {
         return fetch(`${this.url}/products/${id}`, {
             method: "DELETE",
@@ -115,7 +142,47 @@ class api {
                 "Authorization": `Bearer ${token}`
             },
         })
-            .then((res) => res.ok)
+            .then((res) => {
+                if(!res.ok) return false
+
+                return res.json()
+            })
+            .catch((err) => {
+                console.error("error", err);
+            })
+    }
+
+    async deleteCategory(id: any) {
+        return fetch(`${this.url}/category/${id}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
+        })
+            .then((res) => {
+                if(!res.ok) return false
+
+                return res.json()
+            })
+            .catch((err) => {
+                console.error("error", err);
+            })
+    }
+
+    async deleteBrand(id: any) {
+        return fetch(`${this.url}/brand/${id}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
+        })
+            .then((res) => {
+                if(!res.ok) return false
+
+                return res.json()
+            })
             .catch((err) => {
                 console.error("error", err);
             })

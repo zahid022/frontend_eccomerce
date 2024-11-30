@@ -3,7 +3,6 @@ import ConfirmModal from '@/components/admin/product/modal/ConfirmModal.vue';
 import EditProductSidebar from '@/components/admin/product/sidebar/EditProductSidebar.vue';
 import api from '@/services/api';
 import { confirmProduct } from '@/stores/admin/product/modal/confirmProduct';
-import { editProduct } from '@/stores/admin/product/sidebar/editProduct';
 import type { product } from '@/types/dbType';
 import { storeToRefs } from 'pinia';
 import { ref, onMounted, watch } from 'vue';

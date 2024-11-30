@@ -2,11 +2,17 @@
 import api from '@/services/api';
 import type { category } from '@/types/dbType';
 import { ref } from 'vue';
+import { useToast } from 'vue-toastification';
+
+const toast = useToast()
 
 const category_name = ref<string>('')
 
 const handleAddCategory = async () => {
-    if (category_name.value.trim().length === 0) return
+    if (category_name.value.trim().length === 0) {
+        toast.error("Category Name is required")
+        return
+    }
 
     let obj: Partial<category> = {};
     obj.name = category_name.value;
@@ -15,8 +21,14 @@ const handleAddCategory = async () => {
     obj.slug = slug_name
 
     let response = await api.addCategory(obj as category)
-    
-    if(!response) return
+
+    if (!response) {
+        toast.error("Category created is failed")
+        return
+    }
+
+    category_name.value = ''
+    toast.success("Category is created successfully")
 }
 </script>
 
