@@ -107,7 +107,6 @@ thead tr:nth-child(1) {
 
 tr {
     color: #fff;
-    cursor: pointer;
 }
 
 tr:nth-child(even) {

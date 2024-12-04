@@ -15,8 +15,8 @@ const { SET_FLAG } = store
 </script>
 
 <template>
-    <header class="bg-black sticky top-0 left-0 right-0 z-[999] px-6 lg:px-14 py-4">
-        <div class="flex items-center">
+    <header class="bg-black sticky top-0 left-0 right-0 z-[999] py-4">
+        <div class="flex wrapper items-center">
             <div class="w-4/12 md:hidden">
                 <button @click="() => SET_FLAG(!flag)" id="button-toggle">
                     <span :class="{ 'span-first-active': flag }"></span>
