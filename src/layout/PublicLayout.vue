@@ -1,13 +1,15 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router';
+import Header from '@/components/public/layout/Header.vue';
+import Footer from '@/components/public/layout/Footer.vue';
 
 
 </script>
 
 <template>
-    <header>sddsfgd</header>
+    <Header />
     <main>
         <RouterView />
     </main>
-    <footer>ds</footer>
+    <Footer />
 </template>

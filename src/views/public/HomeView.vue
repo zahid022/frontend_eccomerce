@@ -1,13 +1,9 @@
 <template>
-    <div>
-        ds
-    </div>
+    <HeroSection />
 </template>
 
 <script setup lang="ts">
+import HeroSection from '@/components/public/home/HeroSection.vue';
+
 
 </script>
-
-<style scoped>
-
-</style>

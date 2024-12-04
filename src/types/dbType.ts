@@ -27,3 +27,7 @@ export interface category {
     name : string;
     slug : string;
 }
+
+export interface subcategory extends category {
+    category_id : number;
+}

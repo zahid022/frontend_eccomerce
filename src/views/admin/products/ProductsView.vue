@@ -12,10 +12,10 @@ const store = confirmProduct()
 const { confirmFlag } = storeToRefs(store)
 const { SET_CONFIRM_FLAG, SET_CONFIRM_PRODUCT_NAME, SET_CONFIRM_PRODUCT_ID } = store
 
-const showModal = (id: number | undefined, name: string) => {
+const showModal = (id: number , name: string) => {
     SET_CONFIRM_FLAG(true)
     SET_CONFIRM_PRODUCT_NAME(name)
-    if (typeof id === "number") SET_CONFIRM_PRODUCT_ID(id)
+    SET_CONFIRM_PRODUCT_ID(id)
 }
 
 // all products 
@@ -56,7 +56,7 @@ watch(() => confirmFlag.value, () => getProducts())
             </tr>
         </thead>
         <tbody>
-            <tr v-for="(product, index) in data" :key="product.id" @click="() => showModal(product.id, product.name)">
+            <tr v-for="(product, index) in data" :key="product.id" @click="() => showModal(product.id as number, product.name)">
                 <td class="w-[5%]">{{ index + 1 }}</td>
                 <td class="w-[10%]">{{ product.name }}</td>
                 <td class="w-[16%]">{{ product.description }}</td>
