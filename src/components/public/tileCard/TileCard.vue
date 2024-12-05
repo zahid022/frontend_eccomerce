@@ -6,6 +6,7 @@ const props = defineProps<{
 }>()
 </script>
 
+
 <template>
     <RouterLink to="/" class="block tile_card relative">
         <figure class="relative">
