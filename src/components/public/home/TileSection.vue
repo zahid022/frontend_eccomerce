@@ -1,23 +1,17 @@
 <script setup lang="ts">
 import TileCard from '../tileCard/TileCard.vue';
-import TileShirt from "@/assets/img/public/tile_dress-shirts.jpg"
-import TileSuit from "@/assets/img/public/tile_suits.jpg"
+import api from '@/services/api';
+import type { tileSlider } from '@/types/type';
+import { onMounted, ref, type Ref } from 'vue';
 
-export interface tileSlider {
-    image: string,
-    name: string
+const data : Ref<tileSlider[]> = ref([])
+
+onMounted(() => { getData()})
+
+const getData = async () => {
+    let response = await api.getAllTile()
+    data.value = response
 }
-
-const data: tileSlider[] = [
-    {
-        image: TileShirt,
-        name: "Dress Shirts",
-    },
-    {
-        image: TileSuit,
-        name: "Men's Suits",
-    }
-]
 
 </script>
 
@@ -32,6 +26,7 @@ const data: tileSlider[] = [
                         <TileCard :data="sliderData" />
                     </div>
                 </template>
+
             </div>
         </div>
     </section>

@@ -311,6 +311,15 @@ class api {
             .then(data => data)
             .catch((err) => console.error("error", err))
     }
+
+    async getAllTile() {
+        return fetch(`${this.url}/banners/tile`)
+            .then((res) => res.json())
+            .then(data => data)
+            .catch((err) => {
+                console.error("error", err);
+            })
+    }
 }
 
 export default new api()

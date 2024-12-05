@@ -14,6 +14,14 @@ const handleAddCategory = async () => {
         return
     }
 
+    let roleLocal = localStorage.getItem("role")
+    let role = roleLocal ? JSON.parse(roleLocal) : ''
+
+    if(role !== "admin") {
+        toast.error("You are not an ADMIN")
+        return
+    }
+
     let obj: Partial<category> = {};
     obj.name = category_name.value;
 

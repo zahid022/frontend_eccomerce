@@ -14,6 +14,15 @@ const handleAddBrand = async () => {
         return
     }
 
+    let roleLocal = localStorage.getItem("role")
+    let role = roleLocal ? JSON.parse(roleLocal) : ''
+
+    if(role !== "admin") {
+        toast.error("You are not an ADMIN")
+        return
+    }
+
+
     let obj: Partial<brand> = {};
     obj.name = brand_name.value;
 

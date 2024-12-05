@@ -27,6 +27,7 @@ const handleSubmit = async (values: any) => {
         return
     } 
 
+    localStorage.setItem("role", JSON.stringify(result.role))
     localStorage.setItem("token", JSON.stringify(result.token))
     location.reload()
 };

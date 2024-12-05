@@ -31,6 +31,15 @@ const handleClose = () => {
 }
 
 const handleDeleteProduct = async () => {
+    let roleLocal = localStorage.getItem("role")
+    let role = roleLocal ? JSON.parse(roleLocal) : ''
+
+    if(role !== "admin") {
+        toast.error("You are not an ADMIN")
+        handleClose()
+        return
+    }
+
     let result = await api.deleteProduct(confirmProductId.value)
     if(result){
         SET_CONFIRM_FLAG(false)

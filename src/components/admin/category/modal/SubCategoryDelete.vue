@@ -13,6 +13,16 @@ const { subCategoryDeleteFlag, subCategoryId, fetchingFlag } = storeToRefs(store
 const { SET_SUB_CATEGORY_DELETE_FLAG, SET_FETCHING_FLAG } = store
 
 const handleDelete = async () => {
+
+    let roleLocal = localStorage.getItem("role")
+    let role = roleLocal ? JSON.parse(roleLocal) : ''
+
+    if(role !== "admin") {
+        toast.error("You are not an ADMIN")
+        SET_SUB_CATEGORY_DELETE_FLAG(false)
+        return
+    }
+
     let response = await api.deleteSubCategory(subCategoryId.value)
 
     if(!response) {

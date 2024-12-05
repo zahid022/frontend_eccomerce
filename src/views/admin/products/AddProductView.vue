@@ -90,6 +90,13 @@ const { description, discount, name, price, stock } = storeToRefs(store)
 const images = ref<string[]>([])
 
 const handleImageUpload = async (event: Event) => {
+    let roleLocal = localStorage.getItem("role")
+    let role = roleLocal ? JSON.parse(roleLocal) : ''
+
+    if(role !== "admin") {
+        toast.error("You are not an ADMIN")
+        return
+    }
     const formData = new FormData()
     const input = event.target as HTMLInputElement;
     if (input.files) {
@@ -113,6 +120,14 @@ const removeImage = (index: number) => {
 // add product 
 
 const handleAddProduct = async () => {
+    let roleLocal = localStorage.getItem("role")
+    let role = roleLocal ? JSON.parse(roleLocal) : ''
+
+    if(role !== "admin") {
+        toast.error("You are not an ADMIN")
+        return
+    }
+
     let obj  = {
         name : name.value, 
         price : price.value,
@@ -127,7 +142,6 @@ const handleAddProduct = async () => {
         color : selectedColors.value
     }
     let response = await api.addProduct(obj)
-    console.log(response)
 
     if(!response) {
         toast.error("Product created is failed")

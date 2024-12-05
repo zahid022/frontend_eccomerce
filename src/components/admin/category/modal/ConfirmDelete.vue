@@ -13,6 +13,16 @@ const { confirmFlag, categoryName, categoryId } = storeToRefs(store)
 const { SET_CONFIRM_FLAG } = store
 
 const handleDeleteCategory = async () => {
+
+    let roleLocal = localStorage.getItem("role")
+    let role = roleLocal ? JSON.parse(roleLocal) : ''
+
+    if(role !== "admin") {
+        toast.error("You are not an ADMIN")
+        SET_CONFIRM_FLAG(false)
+        return
+    }
+
     let response = await api.deleteCategory(categoryId.value)
 
     if(!response){

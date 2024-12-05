@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { tileSlider } from '../home/TileSection.vue';
+import type { tileSlider } from '@/types/type';
 
 const props = defineProps<{
     data: tileSlider

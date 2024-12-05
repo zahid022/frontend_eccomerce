@@ -36,6 +36,16 @@ const handleSubmit = async () => {
         toast.error("Brand name is required")
         return
     }
+
+    let roleLocal = localStorage.getItem("role")
+    let role = roleLocal ? JSON.parse(roleLocal) : ''
+
+    if(role !== "admin") {
+        toast.error("You are not an ADMIN")
+        SET_EDIT_FLAG(false)
+        return
+    }
+
     let obj: Partial<brand> = {}
     obj.name = brandName.value
 

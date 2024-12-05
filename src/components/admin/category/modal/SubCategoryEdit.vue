@@ -21,6 +21,15 @@ const handleEdit = async () => {
         return
     }
 
+    let roleLocal = localStorage.getItem("role")
+    let role = roleLocal ? JSON.parse(roleLocal) : ''
+
+    if(role !== "admin") {
+        toast.error("You are not an ADMIN")
+        SET_SUB_CATEGORY_EDIT_FLAG(false)
+        return
+    }
+
     let obj: Partial<subcategory> = {
         category_id: categoryId.value,
         name: editname.value

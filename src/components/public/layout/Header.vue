@@ -17,7 +17,7 @@ const { SET_FLAG } = store
 <template>
     <header class="bg-black sticky top-0 left-0 right-0 z-[999] py-4">
         <div class="flex wrapper items-center">
-            <div class="w-4/12 md:hidden">
+            <div class="w-3/12 md:w-4/12 md:hidden">
                 <button @click="() => SET_FLAG(!flag)" id="button-toggle">
                     <span :class="{ 'span-first-active': flag }"></span>
                     <span :class="{ 'span-second-active': flag }"></span>
@@ -36,11 +36,11 @@ const { SET_FLAG } = store
                     </RouterLink>
                 </p>
             </div>
-            <div class="w-4/12 flex justify-center">
+            <div class="w-6/12 md:w-4/12 flex justify-center">
                 <RouterLink class="uppercase text-[18px] md:text-[20px] font-normal text-white tracking-widest" to="">Proper Cloth
                 </RouterLink>
             </div>
-            <div class="w-4/12 flex items-center md:gap-8 justify-end">
+            <div class="w-3/12 md:w-4/12 flex items-center md:gap-8 justify-end">
                 <RouterLink
                     class="text-white hidden md:flex leading-[36px] h-9 items-center justify-center font-light text-[12.5px]"
                     to="/">
