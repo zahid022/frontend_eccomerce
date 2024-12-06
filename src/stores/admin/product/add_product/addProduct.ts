@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 
 export const addProduct = defineStore("addProduct", {
-    state: () => ({ name: "", price: "", discount: "", description: '', stock: "" }),
+    state: () => ({ name: "", price: "", discount: "0", description: '', stock: "" }),
     actions: {
         SET_NAME(txt: string) {
             this.name = txt

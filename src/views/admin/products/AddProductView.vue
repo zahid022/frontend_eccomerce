@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Colors, Size } from '@/enum/enum';
+import { Colors, Size, Tags } from '@/enum/enum';
 import api from '@/services/api';
 import type { brand, category } from '@/types/dbType';
 import { CloudIcon } from '@heroicons/vue/24/outline';
@@ -16,23 +16,32 @@ const toast = useToast()
 // choose size and color 
 const size = Size
 const color = Colors
+const tag = Tags
 
 const sizeFlag = ref(false)
 const colorFlag = ref(false)
+const tagFlag = ref(false)
 const selectedSizes = ref<string[]>([]);
 const selectedColors = ref<string[]>([]);
+const selectedTags = ref<string[]>([]);
 
 const handleOpenAndBlurSelect = (arg: boolean) => { sizeFlag.value = arg }
 const handleOpenAndBlurSelectColor = (arg: boolean) => { colorFlag.value = arg }
+const handleOpenAndBlurSelectTags = (arg: boolean) => { tagFlag.value = arg }
 
 const handleSelection = (event: Event) => {
     const selectedOptions = (event.target as HTMLSelectElement).selectedOptions;
-    selectedSizes.value = Array.from(selectedOptions).map((option) => option.value);
+    selectedSizes.value = Array.from(selectedOptions).map((option) => option.value.toLowerCase());
 };
 
 const handleSelectionC = (event: Event) => {
     const selectedOptions = (event.target as HTMLSelectElement).selectedOptions;
-    selectedColors.value = Array.from(selectedOptions).map((option) => option.value);
+    selectedColors.value = Array.from(selectedOptions).map((option) => option.value.toLowerCase());
+};
+
+const handleSelectionTags = (event: Event) => {
+    const selectedOptions = (event.target as HTMLSelectElement).selectedOptions;
+    selectedTags.value = Array.from(selectedOptions).map((option) => option.value.toLowerCase());
 };
 // -------------
 
@@ -93,7 +102,7 @@ const handleImageUpload = async (event: Event) => {
     let roleLocal = localStorage.getItem("role")
     let role = roleLocal ? JSON.parse(roleLocal) : ''
 
-    if(role !== "admin") {
+    if (role !== "admin") {
         toast.error("You are not an ADMIN")
         return
     }
@@ -103,9 +112,9 @@ const handleImageUpload = async (event: Event) => {
         formData.append("image", input.files[0])
         try {
             let result = await api.uploadImage(formData)
-            
+
             images.value.push(result.url)
-        } catch{
+        } catch {
             return
         }
     }
@@ -123,27 +132,30 @@ const handleAddProduct = async () => {
     let roleLocal = localStorage.getItem("role")
     let role = roleLocal ? JSON.parse(roleLocal) : ''
 
-    if(role !== "admin") {
+    if (role !== "admin") {
         toast.error("You are not an ADMIN")
         return
     }
 
-    let obj  = {
-        name : name.value, 
-        price : price.value,
-        discount : discount.value, 
-        description : description.value, 
-        stock : stock.value, 
-        category_id: categoryId.value, 
-        sub_category_id: sub_categoryId.value, 
-        img: images.value, 
-        brand_id : brandId.value, 
-        size : selectedSizes.value, 
-        color : selectedColors.value
+    console.log(discount)
+
+    let obj = {
+        name: name.value,
+        price: price.value,
+        discount: discount.value || 0,
+        description: description.value,
+        stock: stock.value,
+        category_id: categoryId.value,
+        sub_category_id: sub_categoryId.value,
+        img: images.value,
+        brand_id: brandId.value,
+        size: selectedSizes.value,
+        color: selectedColors.value,
+        tags : selectedTags.value
     }
     let response = await api.addProduct(obj)
 
-    if(!response) {
+    if (!response) {
         toast.error("Product created is failed")
         return
     }
@@ -163,7 +175,7 @@ const handleAddProduct = async () => {
                 <AdminInput :state="'discount'" :flag="true" :name="'discount'" :type="'number'"
                     :text="'Product Discount'" />
             </div>
-            <div class="flex justify-between mb-8">
+            <div class="flex justify-between mb-6">
                 <AdminSelect :flag="true" :id-state="brandId" :name="'brand'" :text="'Choose Brand *'"
                     :options="brandArr" @update:selected="brandId = $event" @click="chooseBrandId" />
 
@@ -175,11 +187,11 @@ const handleAddProduct = async () => {
                 <AdminSelect :flag="true" :id-state="sub_categoryId" :options="sub_categoryArr"
                     @update:selected="sub_categoryId = $event" :name="'sub'" :text="'Product Sub-Category *'" />
             </div>
-            <div class="mb-8">
+            <div class="mb-6">
                 <label for="description">Product Description *</label>
-                <textarea name="description" v-model="description" rows="4"></textarea>
+                <textarea name="description" v-model="description" rows="3"></textarea>
             </div>
-            <div class="flex relative h-[300px] border border-dashed rounded-md justify-between mb-8">
+            <div class="flex relative h-[300px] border border-dashed rounded-md justify-between">
                 <div class="absolute inset-0 flex flex-col justify-center items-center">
                     <CloudIcon class="w-16 text-white" />
                     <span class="text-white text-[22px] font-medium">Upload Image</span>
@@ -192,7 +204,7 @@ const handleAddProduct = async () => {
             <div class="mb-8">
                 <AdminInput :state="'stock'" :flag="false" :name="'stock'" :type="'number'" :text="'Product Stock *'" />
             </div>
-            <div class="mb-16">
+            <div class="mb-8">
                 <label>Product Image *</label>
                 <div v-if="images.length > 0" class="flex flex-wrap gap-4">
                     <div class="pt-3 relative rounded-sm overflow-hidden" v-for="(img, index) in images" :key="index">
@@ -207,7 +219,7 @@ const handleAddProduct = async () => {
                     <p>There is no image!</p>
                 </div>
             </div>
-            <div class="mb-16">
+            <div class="mb-12">
                 <div>
                     <label for="size">Product Size *</label>
                     <select @click="() => handleOpenAndBlurSelect(true)" @change="handleSelection"
@@ -221,7 +233,21 @@ const handleAddProduct = async () => {
                         :key="size">{{ size }}</span>
                 </div>
             </div>
-            <div>
+            <div class="mb-12">
+                <div>
+                    <label for="tags">Product Tags *</label>
+                    <select @click="() => handleOpenAndBlurSelectTags(true)" @change="handleSelectionTags"
+                        @blur="() => handleOpenAndBlurSelectTags(false)" name="tags" :multiple="tagFlag" id="sizeSelect">
+                        <option value="">Choose Tag</option>
+                        <option :value="t" v-for="t in tag" :key="t">{{ t }}</option>
+                    </select>
+                </div>
+                <div v-if="selectedTags.length > 0">
+                    <span class="text-white inline-block pr-2 underline py-1" v-for="tags in selectedTags"
+                        :key="tags">{{ tags }}</span>
+                </div>
+            </div>
+            <div class="mb-12">
                 <div>
                     <label for="size">Product Color *</label>
                     <select @click="() => handleOpenAndBlurSelectColor(true)" @change="handleSelectionC"
@@ -236,7 +262,7 @@ const handleAddProduct = async () => {
                         :key="color">{{ color }}</span>
                 </div>
             </div>
-            <div class="absolute bottom-12 left-8 right-8">
+            <div>
                 <button @click="handleAddProduct"
                     class="w-full block py-3 bg-gray-700 hover:bg-gray-500 font-medium duration-300 text-white rounded-md">Add
                     Product</button>

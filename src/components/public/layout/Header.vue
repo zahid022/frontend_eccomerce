@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router';
 import CardIcon from '../icons/CardIcon.vue';
-import { sidebarMenu } from '@/stores/public/sidebarMenu';
+import { sidebarMenu } from '@/stores/public/sidebar/sidebarMenu';
 import { storeToRefs } from 'pinia';
 import UserIcon from '../icons/UserIcon.vue';
 import SearchIcon from '../icons/SearchIcon.vue';

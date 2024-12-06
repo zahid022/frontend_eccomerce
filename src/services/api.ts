@@ -25,8 +25,12 @@ class api {
             })
     }
 
-    async getProducts() {
-        return fetch(`${this.url}/products`)
+    async getProducts(query = {}) {
+
+        const queryString = new URLSearchParams(query).toString();
+        const urlWithQuery = `${this.url}/products${queryString ? '?' + queryString : ''}`;
+
+        return fetch(urlWithQuery)
             .then((res) => res.json())
             .then(data => data)
             .catch((err) => {

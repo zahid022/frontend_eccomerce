@@ -24,7 +24,7 @@ const data = ref<product[]>([]);
 const getProducts = async () => {
     try {
         const response = await api.getProducts();
-        data.value = response;
+        data.value = response.data;
     } catch (error) {
         console.error("Error fetching products:", error);
     }
@@ -59,7 +59,7 @@ watch(() => confirmFlag.value, () => getProducts())
             <tr v-for="(product, index) in data" :key="product.id" @click="() => showModal(product.id as number, product.name)">
                 <td class="w-[5%]">{{ index + 1 }}</td>
                 <td class="w-[10%]">{{ product.name }}</td>
-                <td class="w-[16%]">{{ product.description }}</td>
+                <td class="w-[16%]">{{ product.description.slice(0, 30) }}</td>
                 <td class="w-[5%]">{{ product.stock }}</td>
                 <td class="w-[7%]">{{ product.price }}</td>
                 <td class="w-[7%]">{{ product.discount }}</td>

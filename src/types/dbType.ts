@@ -14,6 +14,7 @@ export interface product {
     stock : number;
     size : string[];
     color : string[];
+    tafs : string[];
 }
 
 export interface brand {

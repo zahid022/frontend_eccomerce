@@ -16,3 +16,7 @@ export const Colors = [
 export const Size = [
     "XS", "S", "M", "L", "XL", "XXL"
 ]
+
+export const Tags = [
+    "New", "Classics", "Trending"
+]
