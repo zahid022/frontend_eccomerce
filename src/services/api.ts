@@ -324,6 +324,15 @@ class api {
                 console.error("error", err);
             })
     }
+
+    async getAllTrend() {
+        return fetch(`${this.url}/banners/trend`)
+            .then((res) => res.json())
+            .then(data => data)
+            .catch((err) => {
+                console.error("error", err);
+            })
+    }
 }
 
 export default new api()

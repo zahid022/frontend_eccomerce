@@ -2,6 +2,7 @@
 import HeroSection from '@/components/public/home/HeroSection.vue';
 import TagsProducts from '@/components/public/home/TagsProducts.vue';
 import TileSection from '@/components/public/home/TileSection.vue';
+import TrendingSection from '@/components/public/home/TrendingSection.vue';
 
 
 </script>
@@ -10,4 +11,5 @@ import TileSection from '@/components/public/home/TileSection.vue';
     <HeroSection />
     <TileSection />
     <TagsProducts />
+    <TrendingSection />
 </template>

@@ -6,13 +6,16 @@ import api from '@/services/api';
 import { onMounted, ref, watch, onUnmounted, type Ref } from 'vue';
 import TagProductCard from '../tagProductCard/TagProductCard.vue';
 import type { product } from '@/types/dbType';
+import Loading from '../loading/Loading.vue';
 
 const store = tagsBtnsStore();
 
 const data: Ref<product[]> = ref([]);
 const displayedData: Ref<product[]> = ref([]);
 
-const { tag } = storeToRefs(store);
+const { tag, pending } = storeToRefs(store);
+
+const { SET_PENDING } = store
 
 const updateDisplayedData = () => {
   const productsToShow = window.innerWidth < 850 ? 8 : 9;
@@ -24,9 +27,11 @@ const handleResize = () => {
 };
 
 const getData = async () => {
+  SET_PENDING(true)
   const res = await api.getProducts({ tag: tag.value });
   data.value = res.data;
-  updateDisplayedData(); 
+  SET_PENDING(false)
+  updateDisplayedData();
 };
 
 onMounted(() => {
@@ -45,17 +50,22 @@ watch(() => tag.value, () => getData());
 <template>
   <section class="md:py-8">
     <div class="wrapper">
-      <TagBtns />
-      <div id="grid">
-        <TagProductCard
-          v-for="item in displayedData"
-          :key="item.id"
-          :item="item"
-        />
-        <div class="bg-[#F5F5F7] cursor-pointer flex items-center md:text-[22px] justify-center">
-          All <span>→</span>
+
+      <template v-if="pending">
+        <Loading />
+      </template>
+
+      <template v-else>
+        <TagBtns />
+        <div id="grid">
+          <TagProductCard v-for="item in displayedData" :key="item.id" :item="item" />
+          <div class="bg-[#F5F5F7] cursor-pointer flex items-center md:text-[22px] justify-center">
+            All <span>→</span>
+          </div>
         </div>
-      </div>
+      </template>
+
+
     </div>
   </section>
 </template>
